@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <title>İsmet Murat ONAY</title>
+     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+     <link href="css/aos.css?ver=1.1.0" rel="stylesheet">
+     <link href="css/bootstrap.min.css?ver=1.1.0" rel="stylesheet">
+     <link href="css/main.css?ver=1.1.0" rel="stylesheet">
+     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-database.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+     <noscript>
+          <style type="text/css">
+               [data-aos] {
+                    opacity: 1 !important;
+                    transform: translate(0) scale(1) !important;
+               }
+          </style>
+     </noscript>
+</head>
+
+<body id="top">
+     <div id="loader-overlay">
+          <div style="align-items: safe;">
+               <div id="loader"></div>
+               <p>Yükleniyor...</p>
+          </div>
+
+     </div>
+     <div id="snackbar">Your message has been sent successfully.</div>
+
+     <header>
+          <div class="profile-page sidebar-collapse">
+               <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-primary" color-on-scroll="400">
+                    <div class="container">
+                         <div class="navbar-translate">
+                              <div style="display: flex; justify-content: center; align-items: center;">
+                                   <a class="navbar-brand" href="#" rel="tooltip">İsmet Murat ONAY</a>
+                              </div>
+                              <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse"
+                                   data-target="#navigation" aria-controls="navigation" aria-expanded="false"
+                                   aria-label="Toggle navigation">
+                                   <span class="navbar-toggler-bar bar1"></span>
+                                   <span class="navbar-toggler-bar bar2"></span>
+                                   <span class="navbar-toggler-bar bar3"></span>
+                              </button>
+                         </div>
+                         <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                              <ul class="navbar-nav">
+                                   <li class="nav-item"><a class="nav-link smooth-scroll" href="#about">About</a></li>
+                                   <li class="nav-item"><a class="nav-link smooth-scroll" href="#skill">Skills</a></li>
+                                   <li class="nav-item"><a class="nav-link smooth-scroll" href="#projects">Projects</a>
+                                   </li>
+                                   <li class="nav-item"><a class="nav-link smooth-scroll"
+                                             href="#experience">Experience</a>
+                                   </li>
+                                   <li class="nav-item"><a class="nav-link smooth-scroll"
+                                             href="#education">Education</a>
+                                   </li>
+                                   <li class="nav-item"><a class="nav-link smooth-scroll"
+                                             href="#reference">Reference</a>
+                                   </li>
+                                   <li class="nav-item"><a class="nav-link smooth-scroll" href="#contact">Contact</a>
+                                   </li>
+                              </ul>
+                         </div>
+                    </div>
+                    <!-- TODO:TR/EN EKLENTİSİ
+                         <label class="switch">
+                              <input type="checkbox" checked>
+                              <span class="slider round"></span>
+
+                         </label>
+                         <p>TR</p>
+                    -->
+
+               </nav>
+          </div>
+     </header>
+
+     <div class="page-content">
+          <div>
+               <div class="profile-page">
+                    <div class="wrapper">
+                         <div class="page-header page-header-small" filter-color="green">
+                              <div class="page-header-image" data-parallax="true"
+                                   style="background-image: url('images/cc-bg-1.jpg')">
+                              </div>
+                              <div class="container">
+                                   <div class="content-center">
+                                        <div class="cc-profile-image"><a href="#"><img src="images/ismetmuratonay.jpg"
+                                                       alt="Image" /></a></div>
+                                        <div id="topNameSurname" class="h2 title">...</div>
+                                        <p id="topTag" class="category text-white">...</p>
+                                        <a class="btn btn-primary" href="#" data-aos="zoom-in"
+                                             data-aos-anchor="data-aos-anchor">Download
+                                             CV</a>
+                                   </div>
+                              </div>
+                              <div class="section">
+                                   <div class="container">
+                                        <div class="button-container" id="follow-container">
+                                             <!-- SOCIAL MEDIA LINKS -->
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               <div class="section" id="about">
+                    <div class="container">
+                         <div class="card" data-aos="fade-up" data-aos-offset="10">
+                              <div class="row">
+                                   <div class="col-lg-6 col-md-12">
+                                        <div class="card-body" id="paragraph-container">
+                                             <div class="h4 mt-0 title">About</div>
+                                             <!-- PARAGRAPH AREA -->
+                                        </div>
+                                   </div>
+                                   <div class="col-lg-6 col-md-12">
+                                        <div class="card-body">
+                                             <div class="h4 mt-0 title">Basic Information</div>
+                                             <div class="row">
+                                                  <div class="col-sm-4"><strong class="text-uppercase">Age:</strong>
+                                                  </div>
+                                                  <div class="col-sm-8" id="about-age">...</div>
+                                             </div>
+                                             <div class="row mt-3">
+                                                  <div class="col-sm-4"><strong class="text-uppercase">Email:</strong>
+                                                  </div>
+                                                  <div class="col-sm-8" id="about-email">...</div>
+                                             </div>
+                                             <div class="row mt-3">
+                                                  <div class="col-sm-4"><strong class="text-uppercase">Phone:</strong>
+                                                  </div>
+                                                  <div class="col-sm-8" id="about-phone">...</div>
+                                             </div>
+                                             <div class="row mt-3">
+                                                  <div class="col-sm-4"><strong class="text-uppercase">Address:</strong>
+                                                  </div>
+                                                  <div class="col-sm-8" id="about-address">...</div>
+                                             </div>
+                                             <div class="row mt-3">
+                                                  <div class="col-sm-4"><strong
+                                                            class="text-uppercase">Language:</strong></div>
+                                                  <div class="col-sm-8" id="about-language">...</div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               <div class="section" id="skill">
+                    <div class="container">
+                         <div class="h4 text-center mb-4 title">Professional Skills</div>
+                         <div class="card" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                              <div class="card-body" id="card-body">
+                                   <!-- SKILL AREA -->
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               <div class="section" id="projects">
+                    <div class="container">
+                         <div class="row">
+                              <div class="col-md-6 ml-auto mr-auto">
+                                   <div class="h4 text-center mb-4 title">Projects</div>
+                                   <div class="text-center mb-3" style="background-color: #05d462;
+                                        border-radius: 15px;
+                                        padding: 7px;
+                                        color: whitesmoke;" id="selectedProjectId"></div>
+                                   <div class="nav-align-center" id="tabList-rounded-header">
+                                        <!-- ROUNDED TAB BAR AREA -->
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="tab-content gallery mt-5" id="tab-content-mt-5">
+                              <!-- PROJECTS RENDERING AREA -->
+                         </div>
+                    </div>
+               </div>
+               <div class="section" id="experience">
+                    <!-- EXPERIENCE RENDERING AREA -->
+               </div>
+               <div class="section" id="education">
+                    <div class="container cc-education">
+                         <div class="h4 text-center mb-4 title">Education</div>
+                         <div class="card">
+                              <div class="row">
+                                   <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
+                                        data-aos-duration="500">
+                                        <div class="card-body cc-education-header">
+                                             <p>2015 - 2020</p>
+                                             <div class="h5">Bachelor Degree</div>
+                                             <p>AGNO: 3.28</p>
+                                        </div>
+                                   </div>
+                                   <div class="col-md-9" data-aos="fade-left" data-aos-offset="50"
+                                        data-aos-duration="500">
+                                        <div class="card-body">
+                                             <div class="h5" style="color: #05d462;">Faculty of Technology Software
+                                                  Engineering</div>
+                                             <p class="category">University of Firat University</p>
+                                             <p>Elazığ Fırat Üniversitesi Teknoloji Fakültesi Yazılım Mühendisliğ bölümü
+                                                  eğitimi.</p>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               <div class="section" id="reference">
+                    <div class="container cc-reference">
+                         <div class="h4 mb-4 text-center title">References</div>
+                         <div class="card" data-aos="zoom-in">
+                              <div class="carousel slide" id="cc-Indicators" data-ride="carousel">
+                                   <span style="color: white;">COMING SOON</span>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               <div class="section" id="contact">
+                    <div class="cc-contact-information" style="background-image: url('images/staticmap.jpg')">
+                         <div class="container">
+                              <div class="cc-contact">
+                                   <div class="row">
+                                        <div class="col-md-9">
+                                             <div class="card mb-0" data-aos="zoom-in">
+                                                  <div class="h4 text-center title">Contact Me</div>
+                                                  <div class="row">
+                                                       <div class="col-md-6">
+                                                            <div class="card-body">
+                                                                 <form id="contactForm"
+                                                                      action="https://formspree.io/your@email.com"
+                                                                      method="POST">
+                                                                      <div class="p pb-3"><strong
+                                                                                style="color: whitesmoke;">Feel free to
+                                                                                contact
+                                                                                me </strong></div>
+                                                                      <div class="row mb-3">
+                                                                           <div class="col">
+                                                                                <div class="input-group"><span
+                                                                                          class="input-group-addon"><i
+                                                                                               class="fa fa-user-circle"></i></span>
+                                                                                     <input class="form-control"
+                                                                                          type="text" name="name"
+                                                                                          placeholder="Name"
+                                                                                          required="required" />
+                                                                                </div>
+                                                                           </div>
+                                                                      </div>
+                                                                      <div class="row mb-3">
+                                                                           <div class="col">
+                                                                                <div class="input-group"><span
+                                                                                          class="input-group-addon"><i
+                                                                                               class="fa fa-file-text"></i></span>
+                                                                                     <input class="form-control"
+                                                                                          type="text" name="Subject"
+                                                                                          placeholder="Subject"
+                                                                                          required="required" />
+                                                                                </div>
+                                                                           </div>
+                                                                      </div>
+                                                                      <div class="row mb-3">
+                                                                           <div class="col">
+                                                                                <div class="input-group"><span
+                                                                                          class="input-group-addon"><i
+                                                                                               class="fa fa-envelope"></i></span>
+                                                                                     <input class="form-control"
+                                                                                          type="email" name="_replyto"
+                                                                                          placeholder="E-mail"
+                                                                                          required="required" />
+                                                                                </div>
+                                                                           </div>
+                                                                      </div>
+                                                                      <div class="row mb-3">
+                                                                           <div class="col">
+                                                                                <div class="form-group">
+                                                                                     <textarea class="form-control"
+                                                                                          name="message"
+                                                                                          placeholder="Your Message"
+                                                                                          required="required"></textarea>
+                                                                                </div>
+                                                                           </div>
+                                                                      </div>
+                                                                      <div class="row">
+                                                                           <div class="col">
+                                                                                <button class="btn btn-primary"
+                                                                                     type="submit"
+                                                                                     id="sendMailButton">Send</button>
+                                                                           </div>
+                                                                      </div>
+                                                                 </form>
+                                                            </div>
+                                                       </div>
+                                                       <div class="col-md-6">
+                                                            <div class="card-body" id="contact-me-info">
+
+                                                            </div>
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <footer class="footer">
+          <div class="container text-center"><a class="cc-facebook btn btn-link" href="#"><i
+                         class="fa fa-facebook fa-2x " aria-hidden="true"></i></a><a class="cc-twitter btn btn-link "
+                    href="#"><i class="fa fa-twitter fa-2x " aria-hidden="true"></i></a><a
+                    class="cc-google-plus btn btn-link" href="#"><i class="fa fa-google-plus fa-2x"
+                         aria-hidden="true"></i></a><a class="cc-instagram btn btn-link" href="#"><i
+                         class="fa fa-instagram fa-2x " aria-hidden="true"></i></a></div>
+          <div class="text-center text-muted">
+               <p>&copy; github.com/muratonay1. All rights reserved.<br>Design - <a class="credit"
+                         href="https://github.com/muratonay1" target="_blank">@muratonay1</a></p>
+
+               <p>
+                    Your Session: <span id="userIp"></span>
+                    <br>
+                    <br>
+                    Total Visitors: <span id="totalVisitors"></span>
+               </p>
+
+          </div>
+     </footer>
+     <script src="js/core/jquery.3.2.1.min.js?ver=1.1.0"></script>
+     <script src="js/core/popper.min.js?ver=1.1.0"></script>
+     <script src="js/core/bootstrap.min.js?ver=1.1.0"></script>
+     <script src="js/now-ui-kit.js?ver=1.1.0"></script>
+     <script src="js/aos.js?ver=1.1.0"></script>
+     <script src="scripts/firebaseConfig.js"></script>
+     <script src="scripts/methods.js"></script>
+     <script src="scripts/main.js?ver=1.1.0"></script>
+</body>
+
+</html>
