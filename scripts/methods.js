@@ -11,7 +11,7 @@ function convertDate(dateString) {
      return new Date(`${year}-${month}`);
 }
 function getCvData(callback) {
-     const apiUrl = 'http://185.174.69.163:3000/api-get-cv';
+     const apiUrl = 'http://localhost:3000/api-get-cv';
      const userToken = '65d78580994151d94460ea1f';
 
      // Başlık (Header) Oluşturma
