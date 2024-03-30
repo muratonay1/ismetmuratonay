@@ -2154,7 +2154,7 @@ fieldset[disabled] .btn-link.active {
   background-color: transparent;
   border: 1px solid #E3E3E3;
   border-radius: 30px;
-  color: #2c2c2c;
+  color: #d8d8d8;
   line-height: normal;
   font-size: 0.8571em;
   transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -7717,4 +7717,19 @@ input:checked+.slider:before {
 /* Hover durumunda yüksekliği artır */
 .navbar-nav .empty-space:hover {
   height: 30px; /* Yükseklik artışı */
+}
+
+.center {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ekranın yüksekliği kadar formu merkezlemek için */
+}
+
+#captchaContainer {
+  text-align: center;
+}
+
+#captchaForm{
+  display: inline-block;
 }

@@ -1,35 +1,41 @@
-// Add your javascript here
-// Don't forget to add it into respective layouts where this js file is needed
+let isDeveloperMode = true;
+
+document.addEventListener('DOMContentLoaded', function () {
+     if (!isDeveloperMode) {
+          keyBlocked();
+          preventDefault();
+          startSection1();
+     }
+
+     waitMe(true);
+
+     loggedUserInfo(() => {
+          login();
+     });
+});
 
 $(document).ready(function () {
      AOS.init({
 
      });
 
-     // Smooth scroll for links with hashes
      $('a.smooth-scroll').click(function (event) {
-          // On-page links
           if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
 
-               // Figure out element to scroll to
                var target = $(this.hash);
                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-               // Does a scroll target exist?
                if (target.length) {
-                    // Only prevent default if animation is actually gonna happen
                     event.preventDefault();
                     $('html, body').animate({
                          scrollTop: target.offset().top
                     }, 1000, function () {
-                         // Callback after animation
-                         // Must change focus!
                          var $target = $(target);
                          $target.focus();
-                         if ($target.is(":focus")) { // Checking if the target was focused
+                         if ($target.is(":focus")) {
                               return false;
                          } else {
-                              $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
-                              $target.focus(); // Set focus again
+                              $target.attr('tabindex', '-1');
+                              $target.focus();
                          };
                     });
                }
@@ -42,79 +48,115 @@ $(document).ready(function () {
 
 document.getElementById('contactForm').addEventListener('submit', function (event) {
      event.preventDefault();
-     // Form submit olduğunda bu işlev çalışır
-
-     // Eğer bir sayfaya yönlendirme yapmak istiyorsanız, aşağıdaki satırı kullanabilirsiniz
-     // window.location.href = 'yönlenecek_sayfa.html';
-
-     // Başarılı submiti konsola yazdırabilir veya başka bir işlem gerçekleştirebilirsiniz
-     var name = document.getElementsByName('name')[0].value;
-     var subject = document.getElementsByName('Subject')[0].value;
-     var email = document.getElementsByName('_replyto')[0].value;
-     var message = document.getElementsByName('message')[0].value;
+     var nameLocal = document.getElementsByName('name')[0].value;
+     var subjectLocal = document.getElementsByName('Subject')[0].value;
+     var emailLocal = document.getElementsByName('_replyto')[0].value;
+     var messageLocal = document.getElementsByName('message')[0].value;
 
      var data = {
-          "name:": name,
-          "subject:": subject,
-          "email:": email,
-          "message": message,
+          "name": nameLocal,
+          "subject": subjectLocal,
+          "email": emailLocal,
+          "message": messageLocal,
           "createDate": new Date().toLocaleDateString('tr-TR', { weekday: "short", year: "numeric", month: "short", day: "numeric" }) + " " + new Date().toLocaleTimeString('tr-TR'),
           "senderInfo": senderInfo
      };
 
-     firebase.database().ref("senderMails/").push().set(data, error => {
-          if (error) {
-               console.log(error);
-          }
-          else {
-               // Get the snackbar DIV
+     const apiUrl = 'http://192.168.1.108:3000/api-send-mail';
+     const userToken = '65d78580994151d94460ea1f';
+
+     const name = encodeURIComponent(data.name);
+     const subject = encodeURIComponent(data.subject);
+     const email = encodeURIComponent(data.email);
+     const message = encodeURIComponent(data.message);
+     const createDate = encodeURIComponent(data.createDate);
+     const senderInfoRemote = encodeURIComponent(JSON.stringify(data.senderInfo));
+
+     const url = `${apiUrl}?name=${name}&subject=${subject}&email=${email}&message=${message}&createDate=${createDate}&senderInfo=${senderInfoRemote}&x-user-token=${userToken}`;
+
+     const headers = new Headers();
+     headers.append('x-user-token', userToken);
+
+     // İstek Yapılandırması
+     const request = new Request(url, {
+          method: 'GET',
+          headers: headers
+     });
+     // API'ye GET İsteği Gönderme
+     fetch(request)
+          .then(response => {
+               if (!response.ok) {
+                    throw new Error('Network response was not ok');
+               }
+               return response.json();
+          })
+          .then(data => {
                var x = document.getElementById("snackbar");
-
-               // Add the "show" class to DIV
                x.className = "show";
-
-               // After 3 seconds, remove the show class from DIV
                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
                document.getElementsByName('name')[0].value = '';
                document.getElementsByName('Subject')[0].value = '';
                document.getElementsByName('_replyto')[0].value = '';
                document.getElementsByName('message')[0].value = '';
-          }
-     })
-
-     // Formun sayfa yenilenmesini engellemek için aşağıdaki satırı ekleyebilirsiniz
-
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-     keyBlocked();
-     preventDefault();
-     startSection1();
-     waitMe(true);
-     loggedUserInfo(() => {
-          firebase.database().ref('count/counter').transaction(function (currentValue) {
-               document.getElementById("totalVisitors").innerHTML = currentValue;
-               return (currentValue || 0) + 1;
+          })
+          .catch(error => {
+               console.error('Hata:', error);
           });
 
-
-     });
-     getCvData((response) => {
-          about = response.about;
-          follow = response.follows;
-          skill = response.skills
-          project = response.project;
-          experience = response.experience;
-          setFollow();
-          setAbout();
-          setSkill();
-          setProject();
-          setExperience();
-          setContactMeInfo();
-          waitMe(false);
-     })
 });
 
+function login() {
+     const apiUrl = 'http://192.168.1.108:3000/api-get-counter';
+     const userToken = '65d78580994151d94460ea1f';
+
+     // Başlık (Header) Oluşturma
+     const headers = new Headers();
+     headers.append('x-user-token', userToken);
+
+     // İstek Yapılandırması
+     const request = new Request(apiUrl, {
+          method: 'GET',
+          headers: headers,
+     });
+
+     // API'ye İstek Gönderme
+     fetch(request)
+          .then(response => {
+               if (!response.ok) {
+                    throw new Error('Network response was not ok');
+               }
+               return response.json();
+          })
+          .then(data => {
+               if (data.data == false) {
+                    hideSite();
+                    showCaptcha();
+                    waitMe(false);
+               }
+               else {
+                    showSite();
+                    hideCaptcha();
+                    getCvData((response) => {
+                         about = response.filter(i => i.key == "about")[0].data;
+                         follow = response.filter(i => i.key == "follows")[0].data.data;
+                         skill = response.filter(i => i.key == "skills")[0].data.data;
+                         project = response.filter(i => i.key == "project")[0].data.data;
+                         experience = response.filter(i => i.key == "experience")[0].data.data;
+                         setFollow();
+                         setAbout();
+                         setSkill();
+                         setProject();
+                         setExperience();
+                         setContactMeInfo();
+                         waitMe(false);
+                    })
+               }
+               document.getElementById("totalVisitors").innerHTML = data.data;
+          })
+          .catch(error => {
+               console.error('Hata:', error);
+          });
+}
 function startSection1() {
      let devToolsOpen = false;
 
@@ -189,7 +231,6 @@ function keyBlocked() {
                e.preventDefault();
           }
      });
-
 }
 
 function preventDefault() {
@@ -197,3 +238,53 @@ function preventDefault() {
           e.preventDefault();
      });
 }
+
+function hideSite() {
+     document.querySelector(".page-content").hidden = true;
+     document.querySelector(".footer").hidden = true;
+     document.querySelector(".profile-page").hidden = true;
+}
+
+function showSite() {
+     document.querySelector(".page-content").hidden = false;
+     document.querySelector(".footer").hidden = false;
+     document.querySelector(".profile-page").hidden = false;
+}
+
+function showCaptcha() {
+     document.querySelector(".center").style.display = "flex";
+}
+
+function hideCaptcha() {
+     document.querySelector(".center").style.display = "none";
+}
+
+document.getElementById('captchaForm').addEventListener('submit', function (event) {
+     event.preventDefault();
+
+     const captchaResponse = grecaptcha.getResponse();
+
+     const apiUrl = 'http://192.168.1.108:3000/api-verify-captcha';
+
+     const userToken = '65d78580994151d94460ea1f';
+
+     fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+               'Content-Type': 'application/json',
+               'x-user-token': userToken
+          },
+          body: JSON.stringify({ captchaResponse: captchaResponse })
+     })
+          .then(response => response.json())
+          .then(data => {
+               if (data.data.success) {
+                    hideCaptcha();
+                    showSite();
+                    login();
+               }
+          })
+          .catch(error => {
+               console.error('Hata:', error);
+          });
+});

@@ -11,9 +11,7 @@
      <link href="css/aos.css?ver=1.1.0" rel="stylesheet">
      <link href="css/bootstrap.min.css?ver=1.1.0" rel="stylesheet">
      <link href="css/main.css?ver=1.1.0" rel="stylesheet">
-     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
-     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-database.js"></script>
-     <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
      <noscript>
           <style type="text/css">
                [data-aos] {
@@ -25,6 +23,20 @@
 </head>
 
 <body id="top">
+     <div class="center">
+          <div id="captchaContainer">
+              <h5 style="color: red;">Aşırı istek tespit edildi.</h5>
+              <h8>Lütfen robot olmadığınızı doğrulayın.</h8>
+              <br /><br />
+              <form id="captchaForm" method="GET">
+                  <div class="g-recaptcha" data-sitekey="6LcKYakpAAAAANgmMybCfl2OH5AstQ5uNsMfOLnF" data-action="LOGIN"></div>
+                  <br />
+                  <input type="submit" value="Doğrula" style="border: none; width: 30%; color: #05d462; font-weight: bolder; height: 50%;">
+              </form>
+          </div>
+      </div>
+
+
      <div id="loader-overlay">
           <div style="align-items: safe;">
                <div id="loader"></div>
@@ -84,6 +96,7 @@
      </header>
 
      <div class="page-content">
+
           <div>
                <div class="profile-page">
                     <div class="wrapper">
@@ -334,6 +347,7 @@
 
           </div>
      </footer>
+
      <script src="js/core/jquery.3.2.1.min.js?ver=1.1.0"></script>
      <script src="js/core/popper.min.js?ver=1.1.0"></script>
      <script src="js/core/bootstrap.min.js?ver=1.1.0"></script>

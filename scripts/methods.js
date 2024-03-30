@@ -11,9 +11,34 @@ function convertDate(dateString) {
      return new Date(`${year}-${month}`);
 }
 function getCvData(callback) {
-     firebase.database().ref("cv/").on("value", (snapshot) => {
-          callback(snapshot.val());
-     })
+     const apiUrl = 'http://192.168.1.108:3000/api-get-cv';
+     const userToken = '65d78580994151d94460ea1f';
+
+     // Başlık (Header) Oluşturma
+     const headers = new Headers();
+     headers.append('x-user-token', userToken);
+
+     // İstek Yapılandırması
+     const request = new Request(apiUrl, {
+          method: 'GET',
+          headers: headers,
+     });
+
+     // API'ye İstek Gönderme
+     fetch(request)
+          .then(response => {
+               if (!response.ok) {
+                    throw new Error('Network response was not ok');
+               }
+               return response.json();
+          })
+          .then(data => {
+               callback(data.data);
+          })
+          .catch(error => {
+               console.error('Hata:', error);
+          });
+
 }
 
 function setFollow() {
@@ -460,5 +485,6 @@ function waitMe(shown) {
           document.getElementById("loader-overlay").style.display = "none"
      }
 }
+
 
 waitMe(true);
