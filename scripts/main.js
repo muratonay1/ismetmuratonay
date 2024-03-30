@@ -264,7 +264,7 @@ document.getElementById('captchaForm').addEventListener('submit', function (even
 
      const captchaResponse = grecaptcha.getResponse();
 
-     const apiUrl = 'http://192.168.1.108:3000/api-verify-captcha';
+     const apiUrl = 'http://185.174.69.163:3000/api-verify-captcha';
 
      const userToken = '65d78580994151d94460ea1f';
 
