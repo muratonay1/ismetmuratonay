@@ -62,7 +62,7 @@ document.getElementById('contactForm').addEventListener('submit', function (even
           "senderInfo": senderInfo
      };
 
-     const apiUrl = 'http://192.168.1.108:3000/api-send-mail';
+     const apiUrl = 'http://185.174.69.163:3000/api-send-mail';
      const userToken = '65d78580994151d94460ea1f';
 
      const name = encodeURIComponent(data.name);
@@ -106,7 +106,7 @@ document.getElementById('contactForm').addEventListener('submit', function (even
 });
 
 function login() {
-     const apiUrl = 'http://192.168.1.108:3000/api-get-counter';
+     const apiUrl = 'http://185.174.69.163:3000/api-get-counter';
      const userToken = '65d78580994151d94460ea1f';
 
      // Başlık (Header) Oluşturma
