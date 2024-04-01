@@ -11,7 +11,7 @@ function convertDate(dateString) {
      return new Date(`${year}-${month}`);
 }
 function getCvData(callback) {
-     const apiUrl = 'https://muratonay.com.tr/api//api-get-cv';
+     const apiUrl = 'https://muratonay.com.tr/api/api-get-cv';
      const userToken = '65d78580994151d94460ea1f';
 
      // Başlık (Header) Oluşturma
