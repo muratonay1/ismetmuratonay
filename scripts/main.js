@@ -86,6 +86,12 @@ document.getElementById('contactForm').addEventListener('submit', function (even
      fetch(request)
           .then(response => {
                if (!response.ok) {
+                    var x = document.getElementById("snackbar");
+                    x.style.color = "white";
+                    x.style.backgroundColor = "red";
+                    x.innerText = "Mail gönderimi başarısız oldu";
+                    x.className = "show";
+                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
                     throw new Error('Network response was not ok');
                }
                return response.json();
