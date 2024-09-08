@@ -7224,9 +7224,9 @@ img {
 }
 
 .gallery figcaption .container {
-  position: absolute;
-  width: 100%;
-  bottom: 20px;
+  align-items: center;
+  justify-content: center;
+  display: inline-grid;
 }
 
 .gallery figure.cc-effect p,
@@ -7415,6 +7415,7 @@ img {
 .cc-reference img {
   height: 120px;
   width: auto;
+  display: inline;
 }
 
 .cc-reference .h5 {

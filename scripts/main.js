@@ -62,7 +62,7 @@ document.getElementById('contactForm').addEventListener('submit', function (even
           "senderInfo": senderInfo
      };
 
-     const apiUrl = 'https://muratonay.com.tr/api/api-send-mail';
+     const apiUrl = 'https://api.muratonay.com.tr/api/api-send-mail';
      const userToken = '65d78580994151d94460ea1f';
 
      const name = encodeURIComponent(data.name);
@@ -112,7 +112,7 @@ document.getElementById('contactForm').addEventListener('submit', function (even
 });
 
 function login() {
-     const apiUrl = 'https://muratonay.com.tr/api/api-get-counter';
+     const apiUrl = 'https://api.muratonay.com.tr/api/api-get-counter';
      const userToken = '65d78580994151d94460ea1f';
 
      // Başlık (Header) Oluşturma
@@ -270,7 +270,7 @@ document.getElementById('captchaForm').addEventListener('submit', function (even
 
      const captchaResponse = grecaptcha.getResponse();
 
-     const apiUrl = 'https://muratonay.com.tr/api/api-verify-captcha';
+     const apiUrl = 'https://api.muratonay.com.tr/api/api-verify-captcha';
 
      const userToken = '65d78580994151d94460ea1f';
 
