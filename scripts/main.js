@@ -9,9 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
      waitMe(true);
 
-     loggedUserInfo(() => {
-          login();
-     });
+     login();
+
+     /*loggedUserInfo(() => {
+
+     });*/
 });
 
 $(document).ready(function () {
