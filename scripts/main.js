@@ -67,7 +67,7 @@ document.getElementById('contactForm').addEventListener('submit', function (even
      const apiUrl = 'https://api.muratonay.com.tr/api/api-send-mail';
      const userToken = '65d78580994151d94460ea1f';
 
-     const name = encodeURIComponent(data.name);
+     const name = data.name;
      const subject = encodeURIComponent(data.subject);
      const email = encodeURIComponent(data.email);
      const message = encodeURIComponent(data.message);
