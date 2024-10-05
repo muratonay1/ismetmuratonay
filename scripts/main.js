@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
      login();
 
-     /*loggedUserInfo(() => {
+     loggedUserInfo(() => {
 
-     });*/
+     });
 });
 
 $(document).ready(function () {
@@ -101,6 +101,7 @@ document.getElementById('contactForm').addEventListener('submit', function (even
           .then(data => {
                var x = document.getElementById("snackbar");
                x.className = "show";
+               x.innerText = "Mailiniz başarıyla gönderildi.";
                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
                document.getElementsByName('name')[0].value = '';
                document.getElementsByName('Subject')[0].value = '';
