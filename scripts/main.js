@@ -195,8 +195,10 @@ function startSection1() {
                     console.log('Mobil cihazda.');
                     if (window.innerWidth <= 600 && window.innerHeight <= 800) {
                          console.log('Geliştirici araçları muhtemelen kapalı.');
+                         checkDevTools()
                     } else {
                          console.log('Geliştirici araçları açık gibi görünüyor.');
+                         checkDevTools()
                     }
                }
           } else {
