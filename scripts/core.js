@@ -19,14 +19,6 @@ const GenericRequestService = {
 
                const response = await fetch(url, fetchOptions);
 
-               /*
-               if (!response.ok) {
-                    waitMe(false)
-                    throw new Error(`Hata: ${response.status} ${response.statusText}`);
-               }
-                    */
-
-
                const data = await response.json();
 
                if(data.error){
