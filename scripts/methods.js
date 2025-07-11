@@ -419,7 +419,7 @@ function loggedUserInfo(callback) {
                .then(response => response.json())
                .then(data => {
                     senderInfo = data;
-                    document.getElementById("userIp").innerText = data.ipAddress;
+                    document.getElementById("userIp").innerText = data.ip;
                     callback()
                })
                .catch(error => {
