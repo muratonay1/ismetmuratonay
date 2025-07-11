@@ -1,26 +1,17 @@
-let isDeveloperMode = true;
-
 document.addEventListener('DOMContentLoaded', function () {
      if (!isDeveloperMode) {
           keyBlocked();
           preventDefault();
           startSection1();
      }
-
      waitMe(true);
-
      login();
-
      loggedUserInfo(() => {
-
      });
 });
 
 $(document).ready(function () {
-     AOS.init({
-
-     });
-
+     AOS.init({});
      $('a.smooth-scroll').click(function (event) {
           if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
 
@@ -50,122 +41,112 @@ $(document).ready(function () {
 
 document.getElementById('contactForm').addEventListener('submit', function (event) {
      event.preventDefault();
-     var nameLocal = document.getElementsByName('name')[0].value;
-     var subjectLocal = document.getElementsByName('Subject')[0].value;
-     var emailLocal = document.getElementsByName('_replyto')[0].value;
-     var messageLocal = document.getElementsByName('message')[0].value;
 
-     var data = {
-          "name": nameLocal,
-          "subject": subjectLocal,
-          "email": emailLocal,
-          "message": messageLocal,
-          "createDate": new Date().toLocaleDateString('tr-TR', { weekday: "short", year: "numeric", month: "short", day: "numeric" }) + " " + new Date().toLocaleTimeString('tr-TR'),
-          "senderInfo": senderInfo
+     const nameLocal = document.getElementsByName('name')[0].value;
+     const subjectLocal = document.getElementsByName('Subject')[0].value;
+     const emailLocal = document.getElementsByName('_replyto')[0].value;
+     const messageLocal = document.getElementsByName('message')[0].value;
+
+     const data = {
+          name: nameLocal,
+          subject: subjectLocal,
+          email: emailLocal,
+          message: messageLocal,
+          createDate: new Date().toLocaleDateString('tr-TR', { weekday: "short", year: "numeric", month: "short", day: "numeric" }) + " " + new Date().toLocaleTimeString('tr-TR'),
+          senderInfo: senderInfo
      };
 
-     const apiUrl = 'https://api.muratonay.com.tr/api/api-send-mail';
-     const userToken = '65d78580994151d94460ea1f';
+     sendMail(data);
+});
 
-     const name = data.name;
-     const subject = encodeURIComponent(data.subject);
-     const email = encodeURIComponent(data.email);
-     const message = encodeURIComponent(data.message);
-     const createDate = encodeURIComponent(data.createDate);
-     const senderInfoRemote = encodeURIComponent(JSON.stringify(data.senderInfo));
+function sendMail(data) {
+     const apiUrl = RequestUrl.API_SEND_MAIL;
 
-     const url = `${apiUrl}?name=${name}&subject=${subject}&email=${email}&message=${message}&createDate=${createDate}&senderInfo=${senderInfoRemote}&x-user-token=${userToken}`;
+     const queryParams = new URLSearchParams({
+          name: data.name,
+          subject: data.subject,
+          email: data.email,
+          message: data.message,
+          createDate: data.createDate,
+          senderInfo: JSON.stringify(data.senderInfo),
+          "x-user-token": token
+     }).toString();
 
-     const headers = new Headers();
-     headers.append('x-user-token', userToken);
+     const url = `${apiUrl}?${queryParams}`;
 
-     // İstek Yapılandırması
-     const request = new Request(url, {
+     GenericRequestService.request({
+          url: url,
           method: 'GET',
-          headers: headers
-     });
-     // API'ye GET İsteği Gönderme
-     fetch(request)
-          .then(response => {
-               if (!response.ok) {
-                    var x = document.getElementById("snackbar");
-                    x.style.color = "white";
-                    x.style.backgroundColor = "red";
-                    x.innerText = "Mail gönderimi başarısız oldu";
-                    x.className = "show";
-                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
-                    throw new Error('Network response was not ok');
-               }
-               return response.json();
-          })
-          .then(data => {
-               var x = document.getElementById("snackbar");
+          callback: (data) => {
+               const x = document.getElementById("snackbar");
                x.className = "show";
+               x.style.color = "white";
+               x.style.backgroundColor = "green";
                x.innerText = "Mailiniz başarıyla gönderildi.";
-               setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+               setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+
                document.getElementsByName('name')[0].value = '';
                document.getElementsByName('Subject')[0].value = '';
                document.getElementsByName('_replyto')[0].value = '';
                document.getElementsByName('message')[0].value = '';
-          })
-          .catch(error => {
-               console.error('Hata:', error);
-          });
-
-});
+          },
+          errorCallback: (error) => {
+               const x = document.getElementById("snackbar");
+               x.style.color = "white";
+               x.style.backgroundColor = "red";
+               x.innerText = "Mail gönderimi başarısız oldu";
+               x.innerText += error
+               x.className = "show";
+               setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+          }
+     });
+}
 
 function login() {
-     const apiUrl = 'https://api.muratonay.com.tr/api/api-get-counter';
-     const userToken = '65d78580994151d94460ea1f';
-
-     // Başlık (Header) Oluşturma
-     const headers = new Headers();
-     headers.append('x-user-token', userToken);
-
-     // İstek Yapılandırması
-     const request = new Request(apiUrl, {
+     GenericRequestService.request({
+          url: RequestUrl.API_GET_COUNTER,
           method: 'GET',
-          headers: headers,
-     });
-
-     // API'ye İstek Gönderme
-     fetch(request)
-          .then(response => {
-               if (!response.ok) {
-                    throw new Error('Network response was not ok');
-               }
-               return response.json();
-          })
-          .then(data => {
-               if (data.data == false) {
+          callback: (data) => {
+               if (data.data === false) {
                     hideSite();
                     showCaptcha();
-                    waitMe(false);
-               }
-               else {
+               } else {
                     showSite();
                     hideCaptcha();
                     getCvData((response) => {
-                         about = response.filter(i => i.key == "about")[0].data;
-                         follow = response.filter(i => i.key == "follows")[0].data.data;
-                         skill = response.filter(i => i.key == "skills")[0].data.data;
-                         project = response.filter(i => i.key == "project")[0].data.data;
-                         experience = response.filter(i => i.key == "experience")[0].data.data;
+                         cvData = response;
+                         about = getCvResponseDetail("about");
+                         follow = getCvResponseDetail("follows");
+                         skill = getCvResponseDetail("skills");
+                         project = getCvResponseDetail("project");
+                         experience = getCvResponseDetail("experience");
+                         //reference = getCvResponseDetail("reference");
                          setFollow();
                          setAbout();
                          setSkill();
                          setProject();
                          setExperience();
+                         //setReference();
                          setContactMeInfo();
-                         waitMe(false);
-                    })
+                    });
                }
                document.getElementById("totalVisitors").innerHTML = data.data;
-          })
-          .catch(error => {
+          },
+          errorCallback: (error) => {
                console.error('Hata:', error);
-          });
+          },
+     });
 }
+
+function getCvResponseDetail(key) {
+     if (!cvData || !Array.isArray(cvData)) {
+         console.error("cvData uygun bir dizi değil veya tanımlı değil.");
+         return null;
+     }
+     const item = cvData.find(i => i.key === key);
+     return item?.data?.data || item?.data || [];
+ }
+
 function startSection1() {
      let devToolsOpen = false;
 
@@ -229,7 +210,6 @@ function startSection1() {
 function keyBlocked() {
 
      document.addEventListener('keydown', function (e) {
-          // Ctrl + Shift + I (Windows/Linux)
           if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.keyCode === 73) {
                e.preventDefault();
           }
@@ -271,29 +251,19 @@ function hideCaptcha() {
 document.getElementById('captchaForm').addEventListener('submit', function (event) {
      event.preventDefault();
 
-     const captchaResponse = grecaptcha.getResponse();
-
-     const apiUrl = 'https://api.muratonay.com.tr/api/api-verify-captcha';
-
-     const userToken = '65d78580994151d94460ea1f';
-
-     fetch(apiUrl, {
+     GenericRequestService.request({
+          url: RequestUrl.API_VERIFY_CAPTCHA,
           method: 'POST',
-          headers: {
-               'Content-Type': 'application/json',
-               'x-user-token': userToken
-          },
-          body: JSON.stringify({ captchaResponse: captchaResponse })
-     })
-          .then(response => response.json())
-          .then(data => {
+          body: { captchaResponse: grecaptcha.getResponse() },
+          callback: (data) => {
                if (data.data.success) {
                     hideCaptcha();
                     showSite();
                     login();
                }
-          })
-          .catch(error => {
+          },
+          errorCallback: (error) => {
                console.error('Hata:', error);
-          });
+          },
+     });
 });
