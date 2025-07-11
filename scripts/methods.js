@@ -415,7 +415,7 @@ function setContactMeInfo() {
 
 function loggedUserInfo(callback) {
      try {
-          fetch('https://freeipapi.com/api/json')
+          fetch('https://ipinfo.io/json')
                .then(response => response.json())
                .then(data => {
                     senderInfo = data;
