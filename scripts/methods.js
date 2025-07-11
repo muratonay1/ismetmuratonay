@@ -419,9 +419,11 @@ function setReference() {
 function loggedUserInfo(callback) {
      try {
           fetch('https://ipinfo.io/json')
+          fetch('https://ipinfo.io/json')
                .then(response => response.json())
                .then(data => {
                     senderInfo = data;
+                    document.getElementById("userIp").innerText = data.ip;
                     document.getElementById("userIp").innerText = data.ip;
                     callback()
                })
