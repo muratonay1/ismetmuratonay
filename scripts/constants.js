@@ -1,6 +1,6 @@
-let baseUrl = 'http://localhost:3000/api/'
 const token = '65d78580994151d94460ea1f'
 const isDeveloperMode = false;
+let baseUrl = isDeveloperMode ? 'http://localhost:3000/api/' : "https://api.muratonay.com.tr/api/"
 let EndPoints = {
      API_GET_COUNTER     :    'api-get-counter',
      API_VERIFY_CAPTCHA  :    'api-verify-captcha',
